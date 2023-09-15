@@ -1,0 +1,8 @@
+
+<library path="libpublisher_example_lib">
+    <class name="tam_hsr_controller/MyRvizPanel" type="tam_hsr_controller::MyRvizPanel" base_class_type="rviz::Panel">
+        <description>
+            A custom RViz panel for publishing messages to a topic.
+        </description>
+    </class>
+</library>
