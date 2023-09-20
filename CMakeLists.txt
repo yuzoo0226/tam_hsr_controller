@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   rviz
+  tmc_msgs
   Qt5Widgets
   class_loader
   pluginlib
@@ -20,28 +21,27 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES tam_hsr_controller
-  CATKIN_DEPENDS roscpp rospy rviz class_loader pluginlib
-#   DEPENDS system_lib
+  CATKIN_DEPENDS roscpp rospy rviz class_loader pluginlib tmc_msgs
 )
 
-#############
-## Library ##
-#############
-# Qt settings #
+#############################################################
+##                         Library                         ##
+#############################################################
+
+# Qt settings
 add_definitions(-DQT_NO_KEYWORDS)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
 include_directories(
-# include
   ${catkin_INCLUDE_DIRS}
   ${Qt5Widgets_INCLUDE_DIRS}
 )
 
 
-###########
-## Build ##
-###########
+#############################################################
+##                          Build                          ##
+#############################################################
 
 include_directories(
   include
@@ -49,26 +49,32 @@ include_directories(
 )
 link_directories(${catkin_LIBRARY_DIRS})
 
-set(HEADERS
-  include/tam_hsr_controller/publisher_example.h
-)
+#############################################################
+##  プラグインを追加するたびに，以下の4行をコピペし，先頭部分を変更  ##
+#############################################################
 
-add_library(publisher_example_lib SHARED src/publisher_example.cpp ${HEADERS})
+# publishe example
+add_library(publisher_example_lib SHARED src/publisher_example.cpp include/tam_hsr_controller/publisher_example.h)
 set_target_properties(publisher_example_lib PROPERTIES VERSION "${${PROJECT_NAME}_VERSION}")
 target_include_directories(publisher_example_lib PRIVATE "${OGRE_PREFIX_DIR}/include")
-
 target_link_libraries(publisher_example_lib ${catkin_LIBRARIES})
 
-#############
-## Install ##
-#############
+# talker
+add_library(hsr_talker_lib SHARED src/hsr_talker.cpp include/tam_hsr_controller/hsr_talker.h)
+set_target_properties(hsr_talker_lib PROPERTIES VERSION "${${PROJECT_NAME}_VERSION}")
+target_include_directories(hsr_talker_lib PRIVATE "${OGRE_PREFIX_DIR}/include")
+target_link_libraries(hsr_talker_lib ${catkin_LIBRARIES})
 
+
+#############################################################
+##                         Install                         ##
+#############################################################
 install(FILES plugin.xml
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 # install(DIRECTORY icons DESTINATION share/${PROJECT_NAME})
 install(DIRECTORY include/ DESTINATION include)
-install(TARGETS publisher_example_lib
+install(TARGETS publisher_example_lib hsr_talker_lib
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin

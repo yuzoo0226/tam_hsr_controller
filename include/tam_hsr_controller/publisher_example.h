@@ -6,24 +6,28 @@
 #endif
 
 #include <QPushButton>
+#include <QLineEdit>
+#include <QVBoxLayout>
+
 
 namespace tam_hsr_controller{
-  class MyRvizPanel : public rviz::Panel
+  class PublisherExample : public rviz::Panel
   {
     Q_OBJECT
   public:
-    MyRvizPanel(QWidget* parent = 0);
-    ~MyRvizPanel() override;
+    PublisherExample(QWidget* parent = 0);
+    ~PublisherExample() override;
 
     void onInitialize() override;
-    void onEnable();
-    void onDisable();
+    // void onEnable();
+    // void onDisable();
 
   public Q_SLOTS:
     void publishMessage();
 
   private:
     QPushButton* publish_button_;
+    QLineEdit* text_input_;
     ros::NodeHandle nh_;  // ノードハンドルを追加
     ros::Publisher pub_;
   };

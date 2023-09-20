@@ -24,6 +24,7 @@
   <depend>class_loader</depend>
   <depend>pluginlib</depend>
   <depend>std_msgs</depend>
+  <depend>tmc_msgs</depend>
 
   <depend>qtbase5-dev</depend>
   <depend>libqt5-core</depend>
