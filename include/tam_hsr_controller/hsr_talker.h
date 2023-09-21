@@ -6,6 +6,7 @@
 #endif
 
 #include <QPushButton>
+#include <QProcess>
 #include <QLineEdit>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -25,6 +26,8 @@ namespace tam_hsr_controller{
 
   public Q_SLOTS:
     void publishMessage();
+    void startSpeechRecogServer();
+
 
   private:
     // 送信ボタン
@@ -43,6 +46,9 @@ namespace tam_hsr_controller{
 
     // layout
     QVBoxLayout* layout;
+
+    // speech recog server
+    QPushButton* button_speech_recog_;
 
     ros::NodeHandle nh_;  // ノードハンドルを追加
     ros::Publisher pub_;

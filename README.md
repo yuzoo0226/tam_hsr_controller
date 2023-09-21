@@ -21,8 +21,6 @@ apt install qt5-default
 
 ### CMakeLists
 
-- 必要な手順は2つ
-
 - 以下の行を参考に，`publisher_example_lib`の部分を作成したプログラム名に変更
   - `作成したプログラム名_lib`となる．（ビルド後の名前として定義するためっぽい？）
   - headerファイルも追記する必要があることに注意
@@ -33,15 +31,6 @@ add_library(publisher_example_lib SHARED src/publisher_example.cpp include/tam_h
 set_target_properties(publisher_example_lib PROPERTIES VERSION "${${PROJECT_NAME}_VERSION}")
 target_include_directories(publisher_example_lib PRIVATE "${OGRE_PREFIX_DIR}/include")
 target_link_libraries(publisher_example_lib ${catkin_LIBRARIES})
-```
-
-- headerファイルを追記
-
-```cmake
-# ヘッダーファイルを追記
-set(HEADERS
-  include/tam_hsr_controller/publisher_example.h
-)
 ```
 
 ### Plugin.xml

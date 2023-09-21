@@ -10,7 +10,8 @@ namespace tam_hsr_controller{
   HSRTalker::HSRTalker(QWidget* parent) : rviz::Panel(parent)
   {
     // Create a QPushButton
-    publish_button_ = new QPushButton("Publish Message", this);
+    publish_button_ = new QPushButton("speak", this);
+    button_speech_recog_ = new QPushButton("start speech recognition server", this);
 
     // テキスト入力ボックスを作成
     text_input_ = new QLineEdit(this);
@@ -21,6 +22,8 @@ namespace tam_hsr_controller{
 
     // Connect the button click event to the publishMessage slot
     connect(publish_button_, SIGNAL(clicked()), this, SLOT(publishMessage()));
+    connect(button_speech_recog_, SIGNAL(clicked()), this, SLOT(startSpeechRecogServer()));
+
 
     // ラジオボタンを作成
     radio_ja_ = new QRadioButton("Japanese", this);
@@ -42,6 +45,7 @@ namespace tam_hsr_controller{
     layout->addWidget(radio_en_);
     layout->addLayout(layout_text_input);
     layout->addWidget(publish_button_);
+    layout->addWidget(button_speech_recog_);
     setLayout(layout);
   }
 
@@ -69,6 +73,26 @@ namespace tam_hsr_controller{
     }
     pub_.publish(msg);
   }
+
+  void HSRTalker::startSpeechRecogServer(){
+    // roslaunchコマンドを呼び出してlaunchファイルを実行
+    ROS_INFO("Try to launch file started.");
+
+    QProcess process;
+    process.start("roslaunch tam_speech_recog speech_recognition_server.launch ");
+    process.start("roslaunch tam_hsr_utils bring_up.launch ");
+
+
+    if (process.waitForStarted() && process.waitForFinished())
+    {
+      ROS_INFO("Launch file started successfully.");
+    }
+    else
+    {
+      ROS_ERROR("Failed to start launch file.");
+    }
+  }
+
 }
 
 PLUGINLIB_EXPORT_CLASS(tam_hsr_controller::HSRTalker, rviz::Panel)
