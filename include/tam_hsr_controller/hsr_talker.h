@@ -13,7 +13,7 @@
 #include <QRadioButton>
 #include <QButtonGroup>
 #include <QLabel>
-
+#include <unistd.h>
 
 namespace tam_hsr_controller{
   class HSRTalker : public rviz::Panel

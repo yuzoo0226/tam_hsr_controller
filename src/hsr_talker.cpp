@@ -78,19 +78,12 @@ namespace tam_hsr_controller{
     // roslaunchコマンドを呼び出してlaunchファイルを実行
     ROS_INFO("Try to launch file started.");
 
-    QProcess process;
-    process.start("roslaunch tam_speech_recog speech_recognition_server.launch ");
-    process.start("roslaunch tam_hsr_utils bring_up.launch ");
+    QProcess process_speech_recog_server;
+    process_speech_recog_server.start("roslaunch tam_speech_recog speech_recognition_server.launch ");
+    sleep(2);  // 起動安定化のために一定秒sleep
+    // プロセスのみを破棄する（rosノードが落ちるわけではない．）
+    process_speech_recog_server.kill();
 
-
-    if (process.waitForStarted() && process.waitForFinished())
-    {
-      ROS_INFO("Launch file started successfully.");
-    }
-    else
-    {
-      ROS_ERROR("Failed to start launch file.");
-    }
   }
 
 }
