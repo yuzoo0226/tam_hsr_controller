@@ -65,6 +65,11 @@ set_target_properties(hsr_talker_lib PROPERTIES VERSION "${${PROJECT_NAME}_VERSI
 target_include_directories(hsr_talker_lib PRIVATE "${OGRE_PREFIX_DIR}/include")
 target_link_libraries(hsr_talker_lib ${catkin_LIBRARIES})
 
+# launcher
+add_library(hsr_launcher_lib SHARED src/hsr_launcher.cpp include/tam_hsr_controller/hsr_launcher.h)
+set_target_properties(hsr_launcher_lib PROPERTIES VERSION "${${PROJECT_NAME}_VERSION}")
+target_include_directories(hsr_launcher_lib PRIVATE "${OGRE_PREFIX_DIR}/include")
+target_link_libraries(hsr_launcher_lib ${catkin_LIBRARIES})
 
 #############################################################
 ##                         Install                         ##
@@ -74,7 +79,7 @@ install(FILES plugin.xml
 )
 # install(DIRECTORY icons DESTINATION share/${PROJECT_NAME})
 install(DIRECTORY include/ DESTINATION include)
-install(TARGETS publisher_example_lib hsr_talker_lib
+install(TARGETS publisher_example_lib hsr_talker_lib hsr_launcher_lib
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin

@@ -15,3 +15,11 @@
         </description>
     </class>
 </library>
+
+<library path="libhsr_launcher_lib">
+    <class name="tam_hsr_controller/HSRLauncher" type="tam_hsr_controller::HSRLauncher" base_class_type="rviz::Panel">
+        <description>
+            HSRのデフォルトの起動
+        </description>
+    </class>
+</library>
