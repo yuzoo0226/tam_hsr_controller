@@ -24,13 +24,14 @@ namespace tam_hsr_controller{
     connect(publish_button_, SIGNAL(clicked()), this, SLOT(publishMessage()));
     connect(button_speech_recog_, SIGNAL(clicked()), this, SLOT(startSpeechRecogServer()));
 
-
     // ラジオボタンを作成
     radio_ja_ = new QRadioButton("Japanese", this);
     radio_en_ = new QRadioButton("English", this);
     QButtonGroup* radio_group = new QButtonGroup(this);
     radio_group->addButton(radio_ja_);
     radio_group->addButton(radio_en_);
+    // デフォルトで日本語を選択
+    radio_ja_->setChecked(true);
     // label_ja; = new QLabel("Japanese", this);
     // label_en; = new QLabel("English", this);
 
